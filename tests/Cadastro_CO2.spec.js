@@ -2,8 +2,7 @@
 import { test, expect } from '@playwright/test';
 
 test('Acesso a página', async ({ page }) => {
-  await page.goto('/');
-test('Cadastro de Solicitação', async ({ page }) => {
+  await page.goto('https://dev-co2.brado.com.br');
   await page.getByRole('button', { name: 'Calcular emissão' }).click();
   await page.getByRole('combobox', { name: 'Tipo de Carga' }).locator('span').click();
   await page.getByText('Algodão e derivados').click();
@@ -18,8 +17,6 @@ test('Cadastro de Solicitação', async ({ page }) => {
   await page.getByRole('combobox', { name: 'Cidade Destino' }).fill('sumare');
   await page.getByText('Sumaré - SP').click();
   await page.getByRole('button', { name: 'Avançar' }).click();
-  });
-test('Cadastro Dados Pessoais', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Nome' }).click();
   await page.getByRole('textbox', { name: 'Nome' }).fill('Rodolpho Alberto Magalhaes');
   await page.getByRole('textbox', { name: 'Empresa' }).click();
@@ -33,6 +30,4 @@ test('Cadastro Dados Pessoais', async ({ page }) => {
   await page.screenshot({ path: 'screenshot_Email.png' }); //(para tirar print da tela )
   //await page.getByRole('button', { name: 'Avançar' }).click();
   //await page.getByRole('button', { name: 'fechar' }).click();
-  });
-
 });
