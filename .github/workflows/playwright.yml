@@ -1,36 +1,27 @@
-name: Test Pipeline
+name: Playwright Tests
 on:
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
-
 jobs:
   test:
+    timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Debug DNS Resolution
-        run: |
-          nslookup dev-co2.brado.com.br
-          ping -c 4 dev-co2.brado.com.br
-
-      - name: Set Custom DNS
-        run: |
-          echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
-          nslookup dev-co2.brado.com.br
-
-      - name: Run Tests
-        run: npm test
-        env:
-          CI: true
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    - name: Run Playwright tests
+      run: npx playwright test
+    - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
