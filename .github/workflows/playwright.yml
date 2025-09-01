@@ -6,12 +6,11 @@ on:
     branches: [ main, master ]
 jobs:
   test:
-    runs-on: self-hosted  # Ou um label específico configurado no runner
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout código
-        uses: actions/checkout@v4
-      - name: Rodar testes
-        run: npm test  # Seu comando de teste com page.goto
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
       with:
         node-version: lts/*
     - name: Install dependencies
